@@ -1,0 +1,45 @@
+name: Run Postman Collection with Newman
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  newman-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      # 3. Install Newman and HTML Extra Reporter
+      - name: Install Newman and htmlextra reporter
+        run: |
+          npm install -g newman
+          npm install -g newman-reporter-htmlextra
+
+      # 4. Run Postman Collection and Generate HTML Report
+      - name: Run Newman Collection
+        run: |
+          mkdir -p newman
+          newman run fakestoreapi.postman_collection.json \
+            -r htmlextra \
+            --reporter-htmlextra-export newman/report.html \
+            --reporter-htmlextra-title "Fake Store API Test Report" \
+            --reporter-htmlextra-darkTheme
+
+      # 5. Upload HTML Report as Artifact
+      - name: Upload Newman HTML Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-html-report
+          path: newman/report.html
