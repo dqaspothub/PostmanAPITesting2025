@@ -1,0 +1,48 @@
+{
+	"info": {
+		"_postman_id": "e98e862a-ffb2-4df9-99f7-bc00adae8de4",
+		"name": "fakestoreapi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26047972",
+		"_collection_link": "https://lively-robot-633768.postman.co/workspace/My-Workspace~6d826c5a-df73-4718-83b1-4a76250ecc6d/collection/26047972-e98e862a-ffb2-4df9-99f7-bc00adae8de4?action=share&source=collection_link&creator=26047972"
+	},
+	"item": [
+		{
+			"name": "Get Fake Store Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://fakestoreapi.com/products",
+					"protocol": "https",
+					"host": [
+						"fakestoreapi",
+						"com"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
